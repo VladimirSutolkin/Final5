@@ -12,9 +12,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserDao userDao;
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -25,38 +23,33 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void addUser(User user) {
-
+    public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.addUser(user);
+        userDao.createUser(user);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<User> listUsers() {
-        return userDao.listUsers();
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
-
 
     @Transactional(readOnly = true)
     @Override
-    public User getUser(Long id) {
-
-        return userDao.getUser(id);
+    public User readUser(Long id) {
+        return userDao.readUser(id);
     }
 
     @Transactional
     @Override
-    public void editUser(Long id, User user) {
-
+    public void updateUser(Long id, User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.editUser(id, user);
+        userDao.updateUser(id, user);
     }
 
     @Transactional
     @Override
     public void deleteUser(Long id) {
-
         userDao.deleteUser(id);
     }
 }

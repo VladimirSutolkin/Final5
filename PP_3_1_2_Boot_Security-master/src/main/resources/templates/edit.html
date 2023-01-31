@@ -10,7 +10,6 @@
     <input type="submit" value="Logout"/>
 </form>
 <br>
-
 <form th:method="PATCH" th:action="@{/admin/{id}(id=${editable_user.getId()})}" th:object="${editable_user}">
     <label for="uname">Enter UserName</label>
     <input type="text" th:field="*{username}" id="uname"/><br><br>
@@ -18,14 +17,11 @@
     <input type="text" th:field="*{firstname}" id="name"/><br><br>
     <label for="second_name">Enter Second Name</label>
     <input type="text" th:field="*{secondName}" id="second_name"/><br><br>
-    <label for="age">Enter Age</label>
-    <input type="text" th:field="*{age}" id="age"/><br><br>
     <label for="email">Enter Email</label>
     <input type="text" th:field="*{email}" id="email"/><br><br>
     <label for="password">Enter Password</label>
     <input type="text" th:field="*{password}" id="password"/><br><br>
-    <input type="submit" value = "EDIT"/>
+    <input type="submit" value="EDIT"/>
 </form>
-
 </body>
 </html>

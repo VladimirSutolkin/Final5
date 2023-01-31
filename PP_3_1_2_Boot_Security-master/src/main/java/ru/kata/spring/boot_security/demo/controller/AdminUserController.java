@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
-import ru.kata.spring.boot_security.demo.services.security.AccountDetails;
+import ru.kata.spring.boot_security.demo.security.AccountDetails;
 
 import java.util.Arrays;
 
@@ -33,18 +33,17 @@ public class AdminUserController {
 
     @GetMapping("/")
     public String home() {
-        if(userservice.listUsers().isEmpty())
-            userservice.addUser(new User("admin","admin", Arrays.asList("ROLE_ADMIN")));
+        if (userservice.getAllUsers().isEmpty())
+            userservice.createUser(new User("admin", "admin", Arrays.asList("ROLE_ADMIN")));
         return "index";
     }
 
     @GetMapping("/admin")
     public String showUsers(Model model) {
 
-        model.addAttribute("users", userservice.listUsers());
+        model.addAttribute("users", userservice.getAllUsers());
         return "admin";
     }
-
 
     @GetMapping("/admin/register")
     public String register(Model model) {
@@ -57,21 +56,21 @@ public class AdminUserController {
     @PostMapping("/admin/register")
     public String inputUser(@ModelAttribute("user") User user) {
 
-        userservice.addUser(user);
+        userservice.createUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/{id}/edit")
     public String editUser(@PathVariable("id") Long id, Model model) {
 
-        model.addAttribute("editable_user", userservice.getUser(id));
+        model.addAttribute("editable_user", userservice.readUser(id));
         return "edit";
     }
 
     @PatchMapping("/admin/{id}")
     public String edit(@ModelAttribute("editable_user") User user, @PathVariable("id") Long id) {
 
-        userservice.editUser(id, user);
+        userservice.updateUser(id, user);
         return "redirect:/admin";
     }
 
@@ -81,7 +80,6 @@ public class AdminUserController {
         userservice.deleteUser(id);
         return "redirect:/admin";
     }
-
 }
 
 
